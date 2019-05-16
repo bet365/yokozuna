@@ -326,11 +326,17 @@ delete(_Stat) ->
 %% `StatUpdate'.
 -spec update(term()) -> ok.
 update(StatUpdate) ->
-    case sidejob:resource_exists(yz_stat_sj) of
-        true -> yz_stat_worker:update(StatUpdate);
-        false -> perform_update(StatUpdate)
-    end,
-    ok.
+    case app_helper:get_env(?APP, stat) of
+        stats_off ->
+            ok;
+        stats_on ->
+            case sidejob:resource_exists(yz_stat_sj) of
+                true -> yz_stat_worker:update(StatUpdate);
+                false -> perform_update(StatUpdate)
+            end,
+            ok
+    end.
+
 
 %% @private
 -spec stats() -> [{stat_name(), stat_type(), stat_opts(), stat_map()}].
