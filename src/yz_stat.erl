@@ -326,10 +326,10 @@ delete(_Stat) ->
 %% `StatUpdate'.
 -spec update(term()) -> ok.
 update(StatUpdate) ->
-    case app_helper:get_env(?APP, stat) of
-        stats_off ->
+    case app_helper:get_env(riak_stats, ?MODULE, true) of
+        false ->
             ok;
-        stats_on ->
+        true ->
             case sidejob:resource_exists(yz_stat_sj) of
                 true -> yz_stat_worker:update(StatUpdate);
                 false -> perform_update(StatUpdate)
