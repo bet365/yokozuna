@@ -162,7 +162,7 @@ stats() ->
     Spec = fun(N, M, F, As) ->
                {[N], {function, M, F, As, match, value}, [], [{value, N}]}
            end,
-    [Spec(N, M, F, As) ||
+    [Spec(N, M, F, As) || %% stats possibly
         {N, M, F, As} <- [{search_index_error_threshold_ok_count, yz_fuse,
                           aggregate_index_stats, [fuse, ok, count]},
                          {search_index_error_threshold_ok_one, yz_fuse,
