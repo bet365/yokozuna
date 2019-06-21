@@ -16,7 +16,7 @@
 %% under the License.
 %%
 %% -------------------------------------------------------------------
-%%
+
 %% @doc yz_stat is a module for aggregating Yokozuna statistics,
 %%      from administration to querying
 -module(yz_stat).
@@ -79,7 +79,7 @@ start_link() ->
 %% @doc Register Yokozuna stats.
 -spec register_stats() -> ok.
 register_stats() ->
-  riak_core_stat:register_stats(?APP, stats()). % TODO: redirect
+  riak_stat_mngr:register_stats(?APP, stats()). % TODO: redirect
 
 %% @doc Return current aggregation of all stats.
 -spec get_stats() -> proplists:proplist() | {error, Reason :: term()}.
@@ -438,4 +438,3 @@ stats() -> [
   ]}
 ] ++ yz_fuse:stats().
 
-% TODO: fuckin Fuse stats man
